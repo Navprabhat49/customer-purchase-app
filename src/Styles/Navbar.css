@@ -1,0 +1,51 @@
+.navbar {
+    display: flex;
+    justify-content: center;
+    justify-content: space-between;
+    background-color: #111;
+    color: white;
+    padding: 12px 20px;
+    position: relative;
+}
+
+.navbar-logo {
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+}
+
+.nav-center {
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 20px;
+}
+
+/*.nav-right {
+    width: 120px;
+}*/
+
+.nav-btn {
+    background-color: #222;
+    color: white;
+    border: none;
+    padding: 8px 18px;
+    border-radius: 999px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.nav-btn:hover {
+    background-color: yellow;
+    color: black;
+}
+
+.nav-btn.active {
+    background-color: yellow;
+    color: black;
+}
+
