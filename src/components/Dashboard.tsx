@@ -15,9 +15,9 @@ const Dashboard = () => {
                 <div className="card">
                     <CustomerPurchaseForm onSuccess={triggerRefresh}/>
                 </div>
-                <div className="card">
+                {refresh && (<div className="card">
                     <PurchaseList refresh={refresh}/>
-                </div>
+                </div>) }
             </div>
         </div>
     )

@@ -1,27 +1,27 @@
 import { useState } from "react";
 import { getPurchaseByCustomer, getPurchaseByDate } from "../services/PurchaseService";
-import type { PurchaseResponse } from "../types/PurchaseResponse";
 import "../Styles/Report.css";
+import { useReportContext } from "../hooks/ReportContext";
 
 const Report = () => {
-    const [startDate, setStartDate] = useState("");
-    const [endDate, setEndDate] = useState("");
-    const [customerName, setCustomerName] = useState("");
-    const [reportData, setReportData] = useState<PurchaseResponse[]>([]);
-    const [error, setError] = useState("");
+    const {filters, setFilters, data, setData, hasSearched, setHasSearched, 
+        error, setError} = useReportContext();
+   
     const [loading, setLoading] = useState(false);
 
     const handleSearch = async() => {
         setLoading(true);
         setError("");
         try{
-            const {dateData, nameData} = await getReportData(startDate, endDate, customerName);
+            const {dateData, nameData} = await getReportData(filters.startDate, filters.endDate, filters.customerName);
             const finalData = getIntersection(dateData, nameData);
-            setReportData(finalData);
+            setData(finalData);
+            setHasSearched(true);
         } catch(err) {
             console.log(err);
             setError("Something went wrong, try again later");
-            setReportData([]);
+            setData([]);
+            setHasSearched(true);
         } finally {
             setLoading(false);
         }
@@ -51,15 +51,18 @@ const Report = () => {
             <div className="report-form">
             <div className="form-group">
                <label>Start Date</label>
-               <input type="date" onChange={(e) => setStartDate(e.target.value)} />
+               <input type="date" value={filters.startDate} 
+               onChange={(e) => setFilters({...filters,startDate: e.target.value})} />
             </div>
             <div className="form-group">
                <label>End Date</label>
-               <input type="date" onChange={(e) => setEndDate(e.target.value)} />
+               <input type="date" value={filters.endDate} 
+               onChange={(e) => setFilters({...filters, endDate: e.target.value})} />
             </div>
             <div className="form-group">
                 <label>Customer name</label>
-                <input type="text" placeholder="Customer name" onChange={(e) => setCustomerName(e.target.value)} />
+                <input type="text" placeholder="Customer name" value={filters.customerName}
+                onChange={(e) => setFilters({...filters, customerName: e.target.value})} />
             </div>
             <button className="search-btn" onClick={handleSearch} >Search</button>
             </div>
@@ -68,11 +71,11 @@ const Report = () => {
             {loading && <p className="info">Loading... </p>}
             {error && <p className="error">{error}</p>}
 
-            {!loading && !error && reportData.length === 0 && (
+            {!loading && !error && data.length === 0 && (
                 <p className="info">No Data found</p>
             )}
 
-            {reportData.map((item) => (
+            {hasSearched && data.map((item: any) => (
                 <div className="report-card" key={item.id}>
                     <h3>{item.customerName}</h3>
                     <p><strong>Product: </strong> {item.product} </p>
