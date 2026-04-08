@@ -1,13 +1,13 @@
 import CustomerPurchaseForm from "./CustomerPurchaseForm"
 import PurchaseList from "./PurchaseList";
-import {useState} from "react";
 import "../Styles/Dashboard.css";
+import { useReportContext } from "../hooks/ReportContext";
 
 const Dashboard = () => {
-    const [refresh, setRefresh] = useState(false);
+    const {dashboardRefresh, setDashboardRefresh} = useReportContext();
 
     const triggerRefresh = () => {
-        setRefresh(prev => !prev);
+        setDashboardRefresh(prev => !prev);
     }
     return (
         <div>
@@ -15,8 +15,8 @@ const Dashboard = () => {
                 <div className="card">
                     <CustomerPurchaseForm onSuccess={triggerRefresh}/>
                 </div>
-                {refresh && (<div className="card">
-                    <PurchaseList refresh={refresh}/>
+                {dashboardRefresh && (<div className="card">
+                    <PurchaseList refresh={dashboardRefresh}/>
                 </div>) }
             </div>
         </div>

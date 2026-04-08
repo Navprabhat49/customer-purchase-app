@@ -1,14 +1,14 @@
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import { getAllPurchase } from "../services/PurchaseService";
 
 import "../Styles/PurchaseList.css";
-import type { PurchaseResponse } from "../types/PurchaseResponse";
+import { useReportContext } from "../hooks/ReportContext";
 
 
 
 const PurchaseList = ({refresh} : {refresh: boolean}) => {
 
-    const [purchaseData, setPurchaseData] = useState<PurchaseResponse[]>([]);
+    const {purchaseData, setPurchaseData} = useReportContext();
 
     const fetchPurchaseDetails = async() => {
         const response = await getAllPurchase();
