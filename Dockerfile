@@ -1,6 +1,6 @@
 #Build
 
-FROM node:22 AS Build
+FROM node:22 AS build
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
@@ -9,7 +9,7 @@ RUN npm run build
 
 #Serve using nginx
 FROM nginx:alpine
-COPY --from=builder /app/build /usr/share/nginx/html
+COPY --from=build /app/build /usr/share/nginx/html
 RUN echo 'server { \
     listen 80; \
     location / { \
