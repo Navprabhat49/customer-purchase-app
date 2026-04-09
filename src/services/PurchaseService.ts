@@ -44,6 +44,7 @@ export const getPurchaseByDate = async (startDate: String, endDate: String) => {
 }
 
 export const getPurchaseByCustomer = async(customerName: String) => {
+    console.log("Base url configured - " + BASE_URL);
     const res = await fetch(`${BASE_URL}/purchase?customerName=${customerName}`);
 
     if(!res.ok){
