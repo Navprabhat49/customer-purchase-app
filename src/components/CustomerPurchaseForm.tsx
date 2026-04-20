@@ -1,10 +1,15 @@
 import { createPurchase } from "../services/PurchaseService";
 import "../Styles/CustomerPurchaseForm.css";
 import { useReportContext } from "../hooks/ReportContext";
+import { useUserRoles } from "../auth/hooks/useUserRoles";
+import { useAccessToken } from "../auth/hooks/useAccessToken";
 
 const CustomerPurchaseForm = ({onSuccess}: {onSuccess: () => void}) => {
 
     const {dashboardFilters, setDashboardFilters} = useReportContext();
+    const {getToken} = useAccessToken();
+
+    const {isReadWrite} = useUserRoles();
 
     const handleSubmit = async(e: React.SubmitEvent) => {
         e.preventDefault();
@@ -12,8 +17,10 @@ const CustomerPurchaseForm = ({onSuccess}: {onSuccess: () => void}) => {
             ...dashboardFilters
         };
 
+        const token = await getToken();
+
         try {
-            const res = await createPurchase(payload);
+            const res = await createPurchase(payload, token);
             console.log("Success: ", res);
             alert("Purchase created successfully!!");
             onSuccess();
@@ -49,7 +56,7 @@ const CustomerPurchaseForm = ({onSuccess}: {onSuccess: () => void}) => {
                 onChange={(e) => setDashboardFilters({...dashboardFilters, price: Number(e.target.value)})} />
             </div>
 
-            <button type="submit" className="submit-btn">Submit</button>
+            <button type="submit" className="submit-btn" disabled={!isReadWrite}>Submit</button>
 
         </form>
         </div>

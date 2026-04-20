@@ -42,3 +42,8 @@
 .submit-btn:hover {
     background-color: #333;
 }
+
+.submit-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}

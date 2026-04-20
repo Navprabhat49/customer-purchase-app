@@ -2,12 +2,15 @@ import { useState } from "react";
 import { getPurchaseByCustomer, getPurchaseByDate } from "../services/PurchaseService";
 import "../Styles/Report.css";
 import { useReportContext } from "../hooks/ReportContext";
+import { useAccessToken } from "../auth/hooks/useAccessToken";
 
 const Report = () => {
     const {filters, setFilters, data, setData, hasSearched, setHasSearched, 
         error, setError} = useReportContext();
    
     const [loading, setLoading] = useState(false);
+
+    const {getToken} = useAccessToken();
 
     const handleSearch = async() => {
         setLoading(true);
@@ -28,9 +31,11 @@ const Report = () => {
     }
 
     const getReportData = async(startDate: string, endDate: string, customerName: string) => {
+        const token = await getToken();
+
         const [dateData, nameData] = await Promise.all([
-            getPurchaseByDate(startDate, endDate),
-            getPurchaseByCustomer(customerName)
+            getPurchaseByDate(startDate, endDate, token),
+            getPurchaseByCustomer(customerName, token)
         ]);
 
         return {dateData, nameData};

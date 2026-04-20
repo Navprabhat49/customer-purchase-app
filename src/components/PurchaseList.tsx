@@ -3,15 +3,17 @@ import { getAllPurchase } from "../services/PurchaseService";
 
 import "../Styles/PurchaseList.css";
 import { useReportContext } from "../hooks/ReportContext";
-
-
+import { useAccessToken } from "../auth/hooks/useAccessToken";
 
 const PurchaseList = ({refresh} : {refresh: boolean}) => {
 
     const {purchaseData, setPurchaseData} = useReportContext();
 
+    const {getToken} = useAccessToken();
+
     const fetchPurchaseDetails = async() => {
-        const response = await getAllPurchase();
+        const token = await getToken();
+        const response = await getAllPurchase(token);
         setPurchaseData(response.customerPurchaseList);
     }
 
