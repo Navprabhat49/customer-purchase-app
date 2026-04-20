@@ -26,7 +26,3 @@ export const AuthProvider = ({ children } : AuthProviderProps) => {
 
     return <MsalProvider instance={msalInstance}>{children}</MsalProvider>;
 };
-
-export function useAuthProvider() {
-    return { AuthProvider };
-}
