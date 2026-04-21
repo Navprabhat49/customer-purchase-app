@@ -8,6 +8,8 @@ const Navbar = () => {
 
     const {isReadWrite} = useUserRoles();
 
+    console.log('Navbar isReadWrite '+isReadWrite);
+
     return (
     <nav className="navbar">
         <div className="navbar-logo" onClick={() => navigate("/")}>
