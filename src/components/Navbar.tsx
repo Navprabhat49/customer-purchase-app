@@ -1,9 +1,12 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import "../Styles/Navbar.css";
 import LogoutButton from "./LogoutButton";
+import { useUserRoles } from "../auth/hooks/useUserRoles";
 
 const Navbar = () => {
     const navigate = useNavigate();
+
+    const {isReadWrite} = useUserRoles();
 
     return (
     <nav className="navbar">
@@ -11,7 +14,7 @@ const Navbar = () => {
             Purchase Tracker
         </div>
         <div className="nav-center">
-            <NavLink className="nav-btn" to="/">Dashboard</NavLink>
+           { isReadWrite && <NavLink className="nav-btn" to="/">Dashboard</NavLink> }
             <NavLink className="nav-btn" to="/reports">Reports</NavLink>
         </div>
         <div className="nav-right">
