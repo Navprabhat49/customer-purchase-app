@@ -2,13 +2,27 @@ import CustomerPurchaseForm from "./CustomerPurchaseForm"
 import PurchaseList from "./PurchaseList";
 import "../Styles/Dashboard.css";
 import { useReportContext } from "../hooks/ReportContext";
+import { useUserRoles } from "../auth/hooks/useUserRoles";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 const Dashboard = () => {
     const {dashboardRefresh, setDashboardRefresh} = useReportContext();
 
+    const {isReadWrite} = useUserRoles();
+
+    const navigate = useNavigate();
+
     const triggerRefresh = () => {
         setDashboardRefresh(prev => !prev);
     }
+
+    useEffect( () => {
+        if(!isReadWrite){
+           navigate('/reports');
+        }
+    }, [])
+
     return (
         <div>
             <div className="dashboard-container">
