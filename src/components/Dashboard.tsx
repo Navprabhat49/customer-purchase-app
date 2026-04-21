@@ -18,10 +18,11 @@ const Dashboard = () => {
     }
 
     useEffect( () => {
-        if(!isReadWrite){
+        console.log('Dashboard isReadWrite '+isReadWrite);
+        if(isReadWrite===false){
            navigate('/reports');
         }
-    }, [])
+    }, [isReadWrite])
 
     return (
         <div>
