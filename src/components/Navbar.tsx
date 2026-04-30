@@ -8,7 +8,7 @@ const Navbar = () => {
 
     const {isReadWrite} = useUserRoles();
 
-    console.log('Navbar isReadWrite '+isReadWrite);
+    console.log('Navbar isReadWrite user: '+isReadWrite);
 
     return (
     <nav className="navbar">

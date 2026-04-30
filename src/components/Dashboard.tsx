@@ -18,7 +18,7 @@ const Dashboard = () => {
     }
 
     useEffect( () => {
-        console.log('Dashboard isReadWrite '+isReadWrite);
+        console.log('Dashboard isReadWrite user: '+isReadWrite);
         if(isReadWrite===false){
            navigate('/reports');
         }
